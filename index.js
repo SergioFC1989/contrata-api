@@ -1,12 +1,18 @@
 const express = require("express");
+const cors = require("cors");
 
-const app = express();
+const { API } = require("./api/api.js");
 const port = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hola a todos");
+const app = express();
+app.use(cors());
+
+API.forEach((elem) => {
+  app
+    .route(elem.route)
+    [elem.method.toLowerCase()](async (req, res) => elem.function(req, res));
 });
 
 app.listen(port, () => {
-  console.log("Server is running");
+  console.debug(`server is running in port ${port}`);
 });
