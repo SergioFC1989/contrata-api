@@ -12,10 +12,10 @@ const client = new MongoClient(process.env.MONGODB_URI, {
 const onConnectMongoDB = async function () {
   try {
     await client.connect();
-    await client.db("contrata-dev").command({ ping: 1 });
+    await client.db(process.env.MONGODB_DATABASE).command({ ping: 1 });
     return "Conected success!!";
   } catch (error) {
-    console.log(error);
+    return error;
   } finally {
     await client.close();
   }
