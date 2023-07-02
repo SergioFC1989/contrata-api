@@ -1,3 +1,3 @@
-const { API_QUERY_USER } = require("./user/query-user");
+const { API_USER } = require("./user/index");
 
-exports.API = [API_QUERY_USER];
+exports.API = [...API_USER];
