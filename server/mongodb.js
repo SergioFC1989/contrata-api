@@ -9,26 +9,22 @@ const client = new MongoClient(process.env.MONGODB_URI, {
   },
 });
 
-const onConnectMongoDB = async function () {
+const connectDatabaseMongoDB = async function () {
   try {
     await client.connect();
-    await client.db(process.env.MONGODB_DATABASE).command({ ping: 1 });
-    return "Conected success!!";
+    const db = client.db(process.env.MONGODB_DATABASE);
+    return db;
   } catch (error) {
     return error;
-  } finally {
-    await client.close();
   }
 };
 
-exports.API_MONGODB = {
-  method: "GET",
-  route: "/",
-  function: async (_req, _res) => {
-    try {
-      return _res.send(await onConnectMongoDB());
-    } catch (error) {
-      return _res.send(error);
-    }
-  },
+const disconnectDatabaseMongoDB = async function () {
+  try {
+    await client.close();
+  } catch (error) {
+    return error;
+  }
 };
+
+module.exports = { connectDatabaseMongoDB, disconnectDatabaseMongoDB };

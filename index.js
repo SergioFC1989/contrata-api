@@ -2,7 +2,9 @@ const compression = require("compression");
 const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
-const { API } = require("./api/api.js");
+
+const { disconnectDatabaseMongoDB } = require("./server/mongodb");
+const { API } = require("./api");
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -19,6 +21,8 @@ API.forEach((elem) => {
       await elem.function(req, res);
     } catch (error) {
       res.send(error);
+    } finally {
+      await disconnectDatabaseMongoDB();
     }
   });
 });
