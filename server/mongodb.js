@@ -15,7 +15,8 @@ const connectDatabaseMongoDB = async function () {
     const db = client.db(process.env.MONGODB_DATABASE);
     return db;
   } catch (error) {
-    return error;
+    const err = new Response(error);
+    throw res.send(err);
   }
 };
 
@@ -23,7 +24,8 @@ const disconnectDatabaseMongoDB = async function () {
   try {
     await client.close();
   } catch (error) {
-    return error;
+    const err = new Response(error);
+    throw res.send(err);
   }
 };
 
