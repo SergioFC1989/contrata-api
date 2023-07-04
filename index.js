@@ -15,6 +15,7 @@ const upload = multer({ storage: storage });
 
 // middleware
 app.use(express.static("public"));
+app.use(express.json());
 app.use(compression());
 app.use(cors());
 app.use(helmet());
@@ -27,7 +28,10 @@ API.forEach((elem) => {
         await elem.function(req, res);
       } catch (error) {
         const err = new Response(error);
-        throw res.send(err);
+        throw res.send({
+          message: "Error en la solicitud de peticion de Express",
+          err,
+        });
       } finally {
         await disconnectDatabaseMongoDB();
       }
