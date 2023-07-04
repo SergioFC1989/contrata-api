@@ -2,6 +2,7 @@ const {
   fetchGET,
   fetchPOST,
   fetchUPDATE,
+  fetchDELETE,
 } = require("../../utils/method-verbs");
 const { methodRequest } = require("../../utils/method-request");
 
@@ -12,6 +13,7 @@ const configUser = {
     { method: "GET", requestType: fetchGET },
     { method: "POST", requestType: fetchPOST },
     { method: "PUT", requestType: fetchUPDATE },
+    { method: "DELETE", requestType: fetchDELETE },
   ],
 };
 

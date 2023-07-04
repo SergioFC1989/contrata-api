@@ -45,3 +45,19 @@ exports.fetchUPDATE = async function (collection, req) {
     };
   }
 };
+
+exports.fetchDELETE = async function (collection, req) {
+  try {
+    const db = await connectDatabaseMongoDB();
+    const response = await db
+      .collection(collection)
+      .deleteMany({ $or: req.body.filter });
+    return response;
+  } catch (error) {
+    const err = new Error(error);
+    return {
+      message: "Error al eliminar el registro",
+      err,
+    };
+  }
+};
