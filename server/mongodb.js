@@ -15,8 +15,11 @@ const connectDatabaseMongoDB = async function () {
     const db = client.db(process.env.MONGODB_DATABASE);
     return db;
   } catch (error) {
-    const err = new Response(error);
-    throw res.send(err);
+    const err = new Error(error);
+    throw res.send({
+      message: "Error al conectar a la base de datos de MongoDB",
+      err,
+    });
   }
 };
 
@@ -24,8 +27,11 @@ const disconnectDatabaseMongoDB = async function () {
   try {
     await client.close();
   } catch (error) {
-    const err = new Response(error);
-    throw res.send(err);
+    const err = new Error(error);
+    throw res.send({
+      message: "Error al desconectar a la base de datos de MongoDB",
+      err,
+    });
   }
 };
 
