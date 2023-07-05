@@ -1,8 +1,10 @@
 const compression = require("compression");
 const cors = require("cors");
 const express = require("express");
-const helmet = require("helmet");
 const multer = require("multer");
+const helmet = require("helmet");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 
 const { disconnectDatabaseMongoDB } = require("./server/mongodb");
 const { API } = require("./api");
@@ -37,6 +39,9 @@ API.forEach((elem) => {
       }
     });
 });
+
+const swaggerDocument = YAML.load("openapi.yaml");
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(port, () => {
   console.debug(`server is running in port ${port}`);
