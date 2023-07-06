@@ -3,6 +3,7 @@ const cors = require("cors");
 const express = require("express");
 const multer = require("multer");
 const helmet = require("helmet");
+const path = require("path");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
 
@@ -40,7 +41,11 @@ API.forEach((elem) => {
     });
 });
 
-const swaggerDocument = YAML.load("openapi.yaml");
+const swaggerDocument = YAML.load(path.resolve(__dirname, "openapi.yaml"));
+app.use(
+  "/swagger-ui.css",
+  express.static(path.join(__dirname, "public", "swagger-ui.css"))
+);
 app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(port, () => {
