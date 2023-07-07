@@ -41,7 +41,7 @@ API.forEach((elem) => {
     });
 });
 
-const swaggerDocument = YAML.load(path.resolve(__dirname, "openapi.yaml"));
+const swaggerDocument = YAML.load(path.resolve(__dirname, "openapi3_0.yaml"));
 app.use(
   "/swagger-ui.css",
   express.static(path.join(__dirname, "public", "swagger-ui.css"))
