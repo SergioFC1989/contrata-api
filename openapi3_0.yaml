@@ -1,0 +1,148 @@
+openapi: 3.0.1
+info:
+  title: Contrata API
+  description: Javascript | Node | Express | MongoDB
+  contact:
+    email: sergiofc@hotmail.es
+  version: 1.0.0
+paths:
+  /user:
+    post:
+      tags:
+        - user
+      summary: Create one user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description:
+    get:
+      tags:
+        - user
+      summary: Read all users
+      description: This can only be done by the logged in user.
+      operationId: readAllUsers
+      responses:
+        200:
+          description:
+    put:
+      tags:
+        - user
+      summary: Update one o more users
+      description: This can only be done by the logged in user.
+      operationId: updateUsers
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/bodyRequestUser"
+      responses:
+        200:
+          description:
+    delete:
+      tags:
+        - user
+      summary: Delete one o more users
+      description: This can only be done by the logged in user. Any key and value available from the schema user
+      operationId: deleteUsers
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/bodyRequestDeleteUser"
+      responses:
+        200:
+          description:
+  /user?key=value:
+    get:
+      tags:
+        - user
+      summary: Read one user
+      description: This can only be done by the logged in user. Any key and value available from the schema user
+      operationId: readAUser
+      parameters:
+        - name: userName
+          in: query
+          description: John
+          schema:
+            type: string
+      responses:
+        200:
+          description:
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+          example: 10
+        userName:
+          type: string
+          example: UserJhon
+        fullName:
+          type: string
+          example: John
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: "12345"
+        phone:
+          type: string
+          format: int32
+          example: 999 999 999
+        company:
+          type: string
+          example: Intel
+        companyStatus:
+          type: integer
+          format: int32
+          description: 0 = disabled | 1 = enabled
+          example: 1
+      xml:
+        name: user
+definitions:
+  bodyRequestUser:
+    type: object
+    properties:
+      filter:
+        type: object
+        properties:
+          userName:
+            type: string
+            example: Jonh
+        required:
+          - userName
+      data:
+        type: object
+        properties:
+          userName:
+            type: string
+            example: Janes
+        required:
+          - userName
+  bodyRequestDeleteUser:
+    type: object
+    properties:
+      filter:
+        type: object
+        properties:
+          userName:
+            type: string
+            example: Janes
+        required:
+          - userName

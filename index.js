@@ -1,8 +1,11 @@
 const compression = require("compression");
 const cors = require("cors");
 const express = require("express");
-const helmet = require("helmet");
 const multer = require("multer");
+const helmet = require("helmet");
+const path = require("path");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 
 const { disconnectDatabaseMongoDB } = require("./server/mongodb");
 const { API } = require("./api");
@@ -37,6 +40,13 @@ API.forEach((elem) => {
       }
     });
 });
+
+const swaggerDocument = YAML.load(path.resolve(__dirname, "openapi3_0.yaml"));
+app.use(
+  "/swagger-ui.css",
+  express.static(path.join(__dirname, "public", "swagger-ui.css"))
+);
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(port, () => {
   console.debug(`server is running in port ${port}`);
